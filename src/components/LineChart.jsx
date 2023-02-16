@@ -37,7 +37,6 @@ export const LineDaily = ({ data }) => {
 		// setMovingAverage(["", "", "", "", "", "", ...ma])
 		setReversed(data.reverse())
 	}, [])
-	console.log(reversed)
 	return (
 		<>
 			{/* <ResponsiveContainer width='100%' height='100%'> */}
