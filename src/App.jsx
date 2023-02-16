@@ -5,14 +5,12 @@ import Stats from './components/Stats'
 
 function App() {
   const [dailyReport, setDailyReoprt] = useState(null)
-  // const [reversed, setReversed] = useState(null)
 
   useEffect(() => {
     async function getInitialData () {
       const res = await fetch('https://ppns-daily-report-api.herokuapp.com/daily')
       const data = await res.json()
       setDailyReoprt(data['data'])
-      // setReversed(data['data'].reverse())
     }
     getInitialData()
   },[])
