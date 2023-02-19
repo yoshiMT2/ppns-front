@@ -36,10 +36,10 @@ export default function Stats({ data }) {
     setOrChangeType((current / currentActive) >= (previous / previousActive) ? 'increase' : 'decrease')
     setCurrentSitters(Math.round(currentActive/7))
     setPreviousSitters(Math.round(previousActive/7))
-    setSitterChangeType(currentSitters - previousSitters >=0 ? 'increase' : 'decrease')
-    setAverageWage(Math.round(currentWage/3))
+    setSitterChangeType(currentSitters > previousSitters ? 'increase' : 'decrease')
+    setAverageWage(Math.round(currentWage/7))
     setPreviousAverageWage(Math.round(previousWage/0))
-    setWageChangeType(currentWage - previousWage >=0 ? 'increase' : 'decrease')
+    setWageChangeType(currentWage > previousWage ? 'increase' : 'decrease')
 
   }, [])
 
