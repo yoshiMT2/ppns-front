@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/20/solid'
 
 function classNames(...classes) {
@@ -14,13 +14,11 @@ export default function Stats({ data }) {
   const [orChangeType, setOrChangeType] = useState(null)
   const [currentSitters, setCurrentSitters] = useState()
   const [previousSitters, setPreviousSitters] = useState()
-  const [sitterChangeType, setSitterChangeType] = useState(null)
   const [currentWage, setAverageWage] = useState()
   const [previousWage, setPreviousAverageWage] = useState()
-  const [wageChangeType, setWageChangeType] = useState(null)
 
 
-  useEffect(() => {
+  useMemo(() => {
     const reversed = data.reverse()
     const current = reversed.slice(0, 7).map(d => d.daily).reduce((acc, crr) => acc + parseInt(crr, 10), 0)
     const previous = reversed.slice(7, 14).map(d => d.daily).reduce((acc, crr) => acc + parseInt(crr, 10), 0)
@@ -36,18 +34,16 @@ export default function Stats({ data }) {
     setOrChangeType((current / currentActive) >= (previous / previousActive) ? 'increase' : 'decrease')
     setCurrentSitters(Math.round(currentActive/7))
     setPreviousSitters(Math.round(previousActive/7))
-    setSitterChangeType(currentSitters >  previousSitters ? 'increase' : 'decrease')
     setAverageWage(Math.round(currentWage/7))
-    setPreviousAverageWage(Math.round(previousWage/0))
-    setWageChangeType(currentWage > previousWage ? 'increase' : 'decrease')
+    setPreviousAverageWage(Math.round(previousWage/7))
 
-  }, [])
+  },[data])
 
   const stats = [
     { id: 1, name: '合計稼働数', stat: currentWorkload, previousStat: previousWorkload, change: currentWorkload - previousWorkload, changeType: wlChangeType },
     { id: 2, name: '平均稼働率', stat: `${currentOperationRate}%`, previousStat: `${previousOperationRate}%`, change: `${(currentOperationRate - previousOperationRate).toFixed(2)}%`, changeType: orChangeType},
-    { id: 3, name: '稼働シッター数', stat: currentSitters, previousStat: previousSitters, change: currentSitters - previousSitters, changeType: sitterChangeType },
-    { id: 4, name: '平均時給', stat: currentWage, previousStat: previousWage, change: currentWage - previousWage, changeType: wageChangeType },
+    { id: 3, name: '稼働シッター数', stat: currentSitters, previousStat: previousSitters, change: currentSitters - previousSitters, changeType: currentSitters > previousSitters ? 'increase' : 'decrease' },
+    { id: 4, name: '平均時給', stat: currentWage, previousStat: previousWage, change: currentWage - previousWage, changeType: currentWage > previousWage ? 'increase' : 'decrease' },
 
   ]
   return (

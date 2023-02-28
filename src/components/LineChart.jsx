@@ -9,8 +9,6 @@ import {
 	CartesianGrid,
 	Tooltip,
 	Legend,
-	ResponsiveContainer,
-	BarChart
 } from 'recharts';
 
 export const LineDaily = ({ data }) => {
@@ -45,6 +43,8 @@ export const LineDaily = ({ data }) => {
 				minWidth={800}
 				height={400}
 				data={reversed}
+        // barSize={10}
+        barCategoryGap="20%"
 				margin={{
 					top: 20,
 					right: 20,
@@ -70,7 +70,7 @@ export const LineDaily = ({ data }) => {
 					label={{ value: '稼働数', angle: -90, position: 'insideLeft', offset: -10 }}
 				/>
 				{/* <YAxis yAxisId={3} domain ={['dataMin - 1', 'auto']} /> */}
-				<Bar yAxisId={2} type='monotone' dataKey="daily" fill="#58d0ee" barSize={30} name="日毎稼働数" />
+				<Bar yAxisId={2} type='monotone' dataKey="daily" fill="#58d0ee" name="日毎稼働数" />
 				<Line yAxisId={2} type='monotone' dataKey='moving_averages' connectNulls stroke="#ff8b3d" strokeWidth="2" name="7日間移動平均" />
 				<Line yAxisId={1} type='monotone' dataKey='wage' connectNulls stroke="#6489ED" strokeWidth="2" name="時給平均" />
 			</ComposedChart>
